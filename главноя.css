@@ -14,7 +14,7 @@
 }
 
 .u-section-2 .u-text-1 {
-  margin: 81px 135px 0 auto;
+  margin: 82px auto 0;
 }
 
 .u-section-2 .u-btn-1 {
@@ -22,7 +22,7 @@
   border-style: solid;
   font-weight: 700;
   font-size: 1.5rem;
-  margin: 28px auto 0 161px;
+  margin: 15px auto 0 162px;
   padding: 32px 61px 32px 60px;
 }
 
@@ -33,7 +33,7 @@
   text-transform: uppercase;
   font-size: 0.875rem;
   letter-spacing: 0px;
-  margin: -106px 135px 60px auto;
+  margin: -106px 162px 60px auto;
   padding: 40px 67px;
 }
 
@@ -44,11 +44,5 @@
 
   .u-section-2 .u-btn-2 {
     margin-right: 0;
-  }
-}
-
-@media (max-width: 575px) {
-  .u-section-2 .u-text-1 {
-    margin-right: 85px;
   }
 }
