@@ -1,6 +1,7 @@
-const clientId = '1298616944437628999';  // Замените на ваш Client ID
+// Замените на ваш Client ID и Redirect URI
+const clientId = '1298616944437628999';
 const redirectUri = 'https://new-user12345.github.io/login/disocrd/index.html';
-const scope = 'identify email';  // Запрашиваемые разрешения
+const scope = 'identify email';
 
 // Функция для создания URL для авторизации
 function generateAuthUrl() {
@@ -42,28 +43,30 @@ async function fetchAccessToken(code) {
     }
 }
 
-// Основная логика
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('authButton').addEventListener('click', () => {
-        window.location.href = generateAuthUrl();
-    });
+// Логика для кнопки авторизации
+document.getElementById('authButton').addEventListener('click', () => {
+    window.location.href = generateAuthUrl();
+});
 
+// Основная логика
+window.onload = async () => {
     const code = getQueryParam('code');
 
-   // Получение токена
-const accessToken = await fetchAccessToken(code);
+    if (code) {
+        // Если код присутствует в URL, получить access_token
+        const accessToken = await fetchAccessToken(code);
 
-if (accessToken) {
-    console.log("ACCESS_TOKEN:", accessToken);
+        if (accessToken) {
+            console.log("ACCESS_TOKEN:", accessToken);
 
-    // Отправляем токен в родительское окно (TurboWarp)
-    window.opener.postMessage({ accessToken: accessToken }, '*');  // '*' может быть заменен на точный origin вашего расширения, для большей безопасности
+            // Отправляем токен в родительское окно (TurboWarp)
+            window.opener.postMessage({ accessToken: accessToken }, '*');
 
-    // Закрываем окно после отправки токена
-    window.close();
-} else {
-    console.log('Не удалось получить ACCESS_TOKEN');
-    document.getElementById('token').textContent = 'Failed to get access token.';
-}
+            // Закрываем окно после отправки токена
+            window.close();
+        } else {
+            console.log('Не удалось получить ACCESS_TOKEN');
+            document.getElementById('token').textContent = 'Failed to get access token.';
+        }
     }
-});
+};
