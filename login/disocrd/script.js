@@ -50,17 +50,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const code = getQueryParam('code');
 
-    if (code) {
-        // Если код присутствует в URL, получить access_token
-        fetchAccessToken(code).then(accessToken => {
-            if (accessToken) {
-                // Сохраняем accessToken в localStorage
-                localStorage.setItem('discordAccessToken', accessToken);
-                // Перенаправляем пользователя на безопасную страницу или сообщаем о успешном получении токена
-                window.location.href = 'https://new-user12345.github.io/login/discord/index.html'; // замените на ваш редирект URL
-            } else {
-                document.getElementById('token').textContent = 'Failed to get access token.';
-            }
-        });
+   // Получение токена
+const accessToken = await fetchAccessToken(code);
+
+if (accessToken) {
+    console.log("ACCESS_TOKEN:", accessToken);
+
+    // Отправляем токен в родительское окно (TurboWarp)
+    window.opener.postMessage({ accessToken: accessToken }, '*');  // '*' может быть заменен на точный origin вашего расширения, для большей безопасности
+
+    // Закрываем окно после отправки токена
+    window.close();
+} else {
+    console.log('Не удалось получить ACCESS_TOKEN');
+    document.getElementById('token').textContent = 'Failed to get access token.';
+}
     }
 });
