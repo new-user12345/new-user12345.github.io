@@ -1,7 +1,6 @@
-// Замените на ваш Client ID и Redirect URI
-const clientId = '1298616944437628999';
+const clientId = '1298616944437628999';  // Замените на ваш Client ID
 const redirectUri = 'https://new-user12345.github.io/login/disocrd/index.html';
-const scope = 'identify email';
+const scope = 'identify email';  // Запрашиваемые разрешения
 
 // Функция для создания URL для авторизации
 function generateAuthUrl() {
@@ -40,15 +39,15 @@ async function fetchAccessToken(code) {
         return data.access_token;
     } catch (error) {
         console.error('Error fetching access token:', error);
+        return null; // Вернуть null в случае ошибки
     }
 }
 
-// Логика для кнопки авторизации
+// Основная логика
 document.getElementById('authButton').addEventListener('click', () => {
     window.location.href = generateAuthUrl();
 });
 
-// Основная логика
 window.onload = async () => {
     const code = getQueryParam('code');
 
@@ -57,15 +56,11 @@ window.onload = async () => {
         const accessToken = await fetchAccessToken(code);
 
         if (accessToken) {
-            console.log("ACCESS_TOKEN:", accessToken);
-
-            // Отправляем токен в родительское окно (TurboWarp)
+            document.getElementById('token').textContent = `Access Token: ${accessToken}`;
+            // Отправляем токен обратно в родительское окно
             window.opener.postMessage({ accessToken: accessToken }, '*');
-
-            // Закрываем окно после отправки токена
-            window.close();
+            window.close();  // Закрываем текущее окно
         } else {
-            console.log('Не удалось получить ACCESS_TOKEN');
             document.getElementById('token').textContent = 'Failed to get access token.';
         }
     }
