@@ -1,5 +1,5 @@
 const clientId = '1298616944437628999';  // Замените на ваш Client ID
-const redirectUri = 'https://new-user12345.github.io/login/discord';  // Убедитесь, что этот URI настроен в Discord Developer Portal
+const redirectUri = 'https://new-user12345.github.io/login/disocrd/index.html';
 const scope = 'identify email';  // Запрашиваемые разрешения
 
 // Функция для создания URL для авторизации
